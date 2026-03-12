@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Slides — Lightweight HTML Presentation Framework</title>
+    <link rel="stylesheet" href="tech-slides.css">
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+<button class="nav-arrow nav-left" id="btnPrev" onclick="goTo(current-1)">&#8592;</button>
+<button class="nav-arrow nav-right" id="btnNext" onclick="goTo(current+1)">&#8594;</button>
+<button class="fullscreen-btn" id="btnFs" onclick="toggleFs()">&#x26F6; Fullscreen</button>
+
+<!-- SLIDE 1: TITLE -->
+<div class="slide active" data-slide="0">
+    <span class="slide-number">01 / 05</span>
+    <h1 class="animate-in delay-1">Tech Slides</h1>
+    <p class="subtitle animate-in delay-2">A lightweight, keyboard-navigable HTML presentation framework</p>
+    <p class="animate-in delay-3" style="color: var(--muted); font-size: 0.9rem;">No dependencies &bull; Dark theme &bull; Slide transitions &bull; Fullscreen mode</p>
+</div>
+
+<!-- SLIDE 2: FEATURES -->
+<div class="slide" data-slide="1">
+    <span class="slide-number">02 / 05</span>
+    <h2 class="animate-in delay-1">Features</h2>
+
+    <div class="metrics-grid animate-in delay-2">
+        <div class="metric-card"><div class="number">0</div><div class="label">Dependencies</div></div>
+        <div class="metric-card"><div class="number">&lt;5kb</div><div class="label">Total Size</div></div>
+        <div class="metric-card"><div class="number">&infin;</div><div class="label">Slides Supported</div></div>
+        <div class="metric-card"><div class="number">1</div><div class="label">HTML File</div></div>
+    </div>
+
+    <table class="animate-in delay-3">
+        <tr><td><strong>Navigation</strong></td><td>Arrow keys, click, or visible arrow buttons</td></tr>
+        <tr><td><strong>Progress bar</strong></td><td>Animated bar at the top tracks your position</td></tr>
+        <tr><td><strong>Fullscreen</strong></td><td>Built-in button for environments where F11 doesn't work (VDI, remote desktops)</td></tr>
+        <tr><td><strong>Animations</strong></td><td>Staggered fade-in for each element on slide entry</td></tr>
+        <tr><td><strong>Responsive</strong></td><td>Works on desktop, tablet, and mobile</td></tr>
+    </table>
+</div>
+
+<!-- SLIDE 3: COMPONENTS -->
+<div class="slide" data-slide="2">
+    <span class="slide-number">03 / 05</span>
+    <h2 class="animate-in delay-1">Built-in Components</h2>
+
+    <h3 class="animate-in delay-2">Metric Cards</h3>
+    <div class="metrics-grid animate-in delay-2" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="metric-card"><div class="number">42</div><div class="label">Any Number</div></div>
+        <div class="metric-card"><div class="number">3.5x</div><div class="label">Multipliers</div></div>
+        <div class="metric-card"><div class="number">99%</div><div class="label">Percentages</div></div>
+    </div>
+
+    <h3 class="animate-in delay-3">Before / After Columns</h3>
+    <div class="before-after animate-in delay-3">
+        <div class="ba-col before">
+            <h3 style="color: var(--red);">Before</h3>
+            <ul>
+                <li>PowerPoint or Google Slides</li>
+                <li>Heavy, slow to load</li>
+                <li>Hard to version control</li>
+            </ul>
+        </div>
+        <div class="ba-col after">
+            <h3 style="color: var(--green);">After</h3>
+            <ul>
+                <li>Single HTML file</li>
+                <li>Instant load</li>
+                <li>Git-friendly, diffable</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 4: TAGS & TABLES -->
+<div class="slide" data-slide="3">
+    <span class="slide-number">04 / 05</span>
+    <h2 class="animate-in delay-1">Tags &amp; Architecture Flows</h2>
+
+    <h3 class="animate-in delay-2">Status Tags</h3>
+    <p class="animate-in delay-2">
+        <span class="tag tag-done">Done</span>
+        <span class="tag tag-progress">In Progress</span>
+        <span class="tag tag-accent">At Risk</span>
+        <span class="tag tag-phase2">Phase 2</span>
+    </p>
+
+    <h3 class="animate-in delay-3">Architecture Flow</h3>
+    <div class="arch-flow animate-in delay-3">
+        <strong class="highlight">Request Flow</strong><br>
+        Client &rarr; <span class="blue">Load Balancer</span> &rarr; <span class="green">API Server</span> &rarr; <span class="highlight">Database</span><br>
+        <br>
+        <strong class="highlight">Event Flow</strong><br>
+        Producer &rarr; <span class="blue">Message Queue</span> &rarr; <span class="green">Consumer</span> &rarr; <span class="highlight">Storage</span>
+    </div>
+</div>
+
+<!-- SLIDE 5: GET STARTED -->
+<div class="slide closing" data-slide="4">
+    <span class="slide-number">05 / 05</span>
+    <h2 class="animate-in delay-1">Clone it. Edit it. Present it.</h2>
+    <p class="animate-in delay-2" style="color: var(--muted); margin-top: 1rem;">
+        <code>git clone &amp;&amp; open index.html</code>
+    </p>
+    <p class="animate-in delay-3" style="margin-top: 2rem;">
+        <a href="https://github.com/csantos31/tech-slides" style="color: var(--accent); text-decoration: none; font-size: 1.1rem;">github.com/csantos31/tech-slides</a>
+    </p>
+</div>
+
+<script>
+    const slides = document.querySelectorAll('.slide');
+    const progress = document.getElementById('progress');
+    const btnPrev = document.getElementById('btnPrev');
+    const btnNext = document.getElementById('btnNext');
+    const total = slides.length;
+    let current = 0;
+
+    function update() {
+        slides.forEach((s, i) => {
+            s.classList.remove('active');
+            s.style.opacity = '0';
+            s.style.pointerEvents = 'none';
+            s.style.transform = i > current ? 'translateX(60px)' : 'translateX(-60px)';
+        });
+        const active = slides[current];
+        active.classList.add('active');
+        active.style.opacity = '1';
+        active.style.pointerEvents = 'all';
+        active.style.transform = 'translateX(0)';
+
+        progress.style.width = ((current + 1) / total * 100) + '%';
+        btnPrev.classList.toggle('hidden', current === 0);
+        btnNext.classList.toggle('hidden', current === total - 1);
+    }
+
+    function goTo(index) {
+        if (index < 0 || index >= total || index === current) return;
+        current = index;
+        update();
+    }
+
+    function toggleFs() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen().catch(() => {});
+            document.getElementById('btnFs').textContent = '✕ Exit';
+        } else {
+            document.exitFullscreen();
+            document.getElementById('btnFs').textContent = '⛶ Fullscreen';
+        }
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+            e.preventDefault();
+            goTo(current + 1);
+        }
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            goTo(current - 1);
+        }
+    });
+
+    update();
+</script>
+
+</body>
+</html>
