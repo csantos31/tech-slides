@@ -4,7 +4,7 @@ A lightweight, zero-dependency HTML presentation framework with keyboard navigat
 
 **[Live Demo](https://csantos31.github.io/tech-slides/)**
 
-![screenshot](screenshot.png)
+<img src="screenshot.png" alt="Sample components" width="80%" />
 
 ## Features
 
