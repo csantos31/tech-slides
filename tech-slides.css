@@ -1,25 +1,96 @@
-/* Tech Huddle Slide Stylesheet — Nike Sustainability Platform
+/* Tech Slides — Lightweight HTML Presentation Framework
    Fonts: Space Grotesk + JetBrains Mono
-   Theme: Dark mode with Nike orange accent
-   Usage: <link rel="stylesheet" href="tech-huddle-slides.css"> */
+   Themes: set <html data-theme="…"> — see tech-slides.js TECH_SLIDE_THEMES + blocks below.
+   To add a palette: copy a :root[data-theme="…"] block, set variables, add { id, label, icon } to the JS array (same order as cycle).
+   Usage: <link rel="stylesheet" href="tech-slides.css"> */
 
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
 
+/* Shared status / flow colors — inherited by every data-theme block */
 :root {
+    --green: #22c55e;
+    --red: #ef4444;
+    --yellow: #eab308;
+    --blue: #3b82f6;
+    --purple: #a855f7;
+}
+
+/* ── Theme: dark (default when data-theme omitted) ─────────────── */
+
+:root[data-theme="dark"],
+:root:not([data-theme]) {
     --bg: #0f0f0f;
     --surface: #1a1a1a;
     --surface2: #242424;
     --border: #333;
     --accent: #f56e0f;
     --accent2: #ff9a44;
-    --green: #22c55e;
-    --red: #ef4444;
-    --yellow: #eab308;
-    --blue: #3b82f6;
-    --purple: #a855f7;
     --text: #f1f1f1;
     --muted: #888;
+    --text-secondary: #ccc;
+    --list-text: #bbb;
+    --flow-text: #aaa;
+    --nav-bg: rgba(255,255,255,0.05);
+    --nav-border: rgba(255,255,255,0.1);
+    --nav-hover-bg: rgba(245,110,15,0.2);
 }
+
+/* ── Theme: light (Cararra + French Rose + Paprika) ─────────────── */
+
+:root[data-theme="light"] {
+    --bg: #e7e8e2;
+    --surface: #f0f1ed;
+    --surface2: #dcdfd6;
+    --border: #c5c0ba;
+    --accent: #f15483;
+    --accent2: #940242;
+    --text: #010101;
+    --muted: #958f89;
+    --text-secondary: #2a2a2a;
+    --list-text: #3d3a38;
+    --flow-text: #5c5752;
+    --nav-bg: rgba(241, 84, 131, 0.08);
+    --nav-border: rgba(148, 2, 66, 0.18);
+    --nav-hover-bg: rgba(241, 84, 131, 0.14);
+}
+
+:root[data-theme="ocean"] {
+    --bg: #0a1628;
+    --surface: #122a45;
+    --surface2: #1a3555;
+    --border: #2a4a6a;
+    --accent: #38bdf8;
+    --accent2: #0ea5e9;
+    --text: #f0f9ff;
+    --muted: #94a3b8;
+    --text-secondary: #e2e8f0;
+    --list-text: #cbd5e1;
+    --flow-text: #cbd5e1;
+    --nav-bg: rgba(56, 189, 248, 0.08);
+    --nav-border: rgba(56, 189, 248, 0.2);
+    --nav-hover-bg: rgba(56, 189, 248, 0.15);
+}
+
+/* ── Add more palettes: duplicate a block above and use a new id ───
+   Register the same id in tech-slides.js → TECH_SLIDE_THEMES.
+
+   :root[data-theme="ocean"] {
+       --bg: #0a1628;
+       --surface: #122a45;
+       --surface2: #1a3555;
+       --border: #2a4a6a;
+       --accent: #38bdf8;
+       --accent2: #0ea5e9;
+       --text: #f0f9ff;
+       --muted: #94a3b8;
+       --text-secondary: #e2e8f0;
+       --list-text: #cbd5e1;
+       --flow-text: #cbd5e1;
+       --nav-bg: rgba(56, 189, 248, 0.08);
+       --nav-border: rgba(56, 189, 248, 0.2);
+       --nav-hover-bg: rgba(56, 189, 248, 0.15);
+   }
+*/
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -77,7 +148,7 @@ h3 {
     color: var(--accent2);
 }
 
-p { margin-bottom: 1rem; font-size: 1.05rem; color: #ccc; }
+p { margin-bottom: 1rem; font-size: 1.05rem; color: var(--text-secondary); }
 .subtitle { font-size: 1.3rem; color: var(--muted); margin-bottom: 2rem; }
 
 .tag {
@@ -91,7 +162,10 @@ p { margin-bottom: 1rem; font-size: 1.05rem; color: #ccc; }
 }
 .tag-done { background: rgba(34,197,94,0.15); color: var(--green); }
 .tag-progress { background: rgba(234,179,8,0.15); color: var(--yellow); }
-.tag-accent { background: rgba(245,110,15,0.15); color: var(--accent); }
+.tag-accent {
+    background: color-mix(in srgb, var(--accent) 18%, transparent);
+    color: var(--accent);
+}
 .tag-phase2 { background: rgba(168,85,247,0.15); color: var(--purple); }
 
 table {
@@ -165,7 +239,7 @@ tr:hover { background: var(--surface); }
 .ba-col.after { border-top: 3px solid var(--green); }
 .ba-col h3 { margin-top: 0; }
 .ba-col ul { padding-left: 1.25rem; }
-.ba-col li { margin-bottom: 0.4rem; font-size: 0.95rem; color: #bbb; }
+.ba-col li { margin-bottom: 0.4rem; font-size: 0.95rem; color: var(--list-text); }
 
 .arch-flow {
     background: var(--surface);
@@ -175,7 +249,7 @@ tr:hover { background: var(--surface); }
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.9rem;
     line-height: 1.8;
-    color: #aaa;
+    color: var(--flow-text);
     margin: 1rem 0;
 }
 .arch-flow .highlight { color: var(--accent2); font-weight: 600; }
@@ -248,8 +322,8 @@ body.slides-mode { overflow: hidden; }
     position: fixed;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: var(--nav-bg);
+    border: 1px solid var(--nav-border);
     color: var(--muted);
     font-size: 1.5rem;
     width: 48px;
@@ -262,27 +336,52 @@ body.slides-mode { overflow: hidden; }
     align-items: center;
     justify-content: center;
 }
-.nav-arrow:hover { background: rgba(245,110,15,0.2); color: var(--accent); border-color: var(--accent); }
+.nav-arrow:hover { background: var(--nav-hover-bg); color: var(--accent); border-color: var(--accent); }
 .nav-left { left: 1.5rem; }
 .nav-right { right: 1.5rem; }
 .nav-arrow.hidden { opacity: 0; pointer-events: none; }
 
-.fullscreen-btn {
+/* Top-left controls: flex row avoids overlap between fullscreen + theme */
+.slide-toolbar {
     position: fixed;
     top: 1.5rem;
     left: 1.5rem;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
+    z-index: 100;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.toolbar-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.75rem;
+    height: 2.75rem;
+    padding: 0 0.65rem;
+    box-sizing: border-box;
+    background: var(--nav-bg);
+    border: 1px solid var(--nav-border);
     color: var(--muted);
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    padding: 0.4rem 0.8rem;
-    border-radius: 6px;
+    font-size: 1.05rem;
+    line-height: 1;
+    border-radius: 8px;
     cursor: pointer;
-    z-index: 100;
-    transition: all 0.2s;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
-.fullscreen-btn:hover { background: rgba(245,110,15,0.2); color: var(--accent); border-color: var(--accent); }
+
+.toolbar-btn:hover {
+    background: var(--nav-hover-bg);
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+.theme-btn {
+    font-size: 1.15rem;
+}
 
 @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(20px); }

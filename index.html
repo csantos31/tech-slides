@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,40 +11,43 @@
 <div class="progress-bar" id="progress"></div>
 <button class="nav-arrow nav-left" id="btnPrev" onclick="goTo(current-1)">&#8592;</button>
 <button class="nav-arrow nav-right" id="btnNext" onclick="goTo(current+1)">&#8594;</button>
-<button class="fullscreen-btn" id="btnFs" onclick="toggleFs()">&#x26F6; Fullscreen</button>
+<div class="slide-toolbar" role="toolbar" aria-label="Presentation controls">
+    <button type="button" class="toolbar-btn" id="btnFs" onclick="toggleFs()" title="Fullscreen (F)" aria-label="Toggle fullscreen">&#x26F6;</button>
+    <button type="button" class="toolbar-btn theme-btn" id="btnTheme" onclick="cycleTheme()" title="Theme (T)" aria-label="Switch theme">&#9728;</button>
+</div>
 
 <!-- SLIDE 1: TITLE -->
 <div class="slide active" data-slide="0">
-    <span class="slide-number">01 / 05</span>
+    <span class="slide-number">01 / 07</span>
     <h1 class="animate-in delay-1">Tech Slides</h1>
     <p class="subtitle animate-in delay-2">A lightweight, keyboard-navigable HTML presentation framework</p>
-    <p class="animate-in delay-3" style="color: var(--muted); font-size: 0.9rem;">No dependencies &bull; Dark theme &bull; Slide transitions &bull; Fullscreen mode</p>
+    <p class="animate-in delay-3" style="color: var(--muted); font-size: 0.9rem;">No dependencies &bull; Pluggable palettes (<code>data-theme</code> + <code>TECH_SLIDE_THEMES</code>) &bull; Fullscreen mode</p>
 </div>
 
 <!-- SLIDE 2: FEATURES -->
 <div class="slide" data-slide="1">
-    <span class="slide-number">02 / 05</span>
+    <span class="slide-number">02 / 07</span>
     <h2 class="animate-in delay-1">Features</h2>
 
     <div class="metrics-grid animate-in delay-2">
         <div class="metric-card"><div class="number">0</div><div class="label">Dependencies</div></div>
         <div class="metric-card"><div class="number">&lt;5kb</div><div class="label">Total Size</div></div>
         <div class="metric-card"><div class="number">&infin;</div><div class="label">Slides Supported</div></div>
-        <div class="metric-card"><div class="number">1</div><div class="label">HTML File</div></div>
+        <div class="metric-card"><div class="number">3</div><div class="label">Files (HTML+CSS+JS)</div></div>
     </div>
 
     <table class="animate-in delay-3">
-        <tr><td><strong>Navigation</strong></td><td>Arrow keys, click, or visible arrow buttons</td></tr>
-        <tr><td><strong>Progress bar</strong></td><td>Animated bar at the top tracks your position</td></tr>
-        <tr><td><strong>Fullscreen</strong></td><td>Built-in button for environments where F11 doesn't work (VDI, remote desktops)</td></tr>
+        <tr><td><strong>Navigation</strong></td><td>Arrow keys, spacebar, click, or <code>F</code> for fullscreen</td></tr>
+        <tr><td><strong>Theme cycle</strong></td><td>Press <code>T</code> to cycle palettes (order defined in <code>TECH_SLIDE_THEMES</code>) &mdash; persists via localStorage</td></tr>
+        <tr><td><strong>Fullscreen</strong></td><td>Button + <code>F</code> key &mdash; ESC always exits cleanly</td></tr>
         <tr><td><strong>Animations</strong></td><td>Staggered fade-in for each element on slide entry</td></tr>
-        <tr><td><strong>Responsive</strong></td><td>Works on desktop, tablet, and mobile</td></tr>
+        <tr><td><strong>Separated assets</strong></td><td>CSS + JS are external &mdash; HTML stays clean and portable</td></tr>
     </table>
 </div>
 
 <!-- SLIDE 3: COMPONENTS -->
 <div class="slide" data-slide="2">
-    <span class="slide-number">03 / 05</span>
+    <span class="slide-number">03 / 07</span>
     <h2 class="animate-in delay-1">Built-in Components</h2>
 
     <h3 class="animate-in delay-2">Metric Cards</h3>
@@ -77,7 +80,7 @@
 
 <!-- SLIDE 4: TAGS & TABLES -->
 <div class="slide" data-slide="3">
-    <span class="slide-number">04 / 05</span>
+    <span class="slide-number">04 / 07</span>
     <h2 class="animate-in delay-1">Tags &amp; Architecture Flows</h2>
 
     <h3 class="animate-in delay-2">Status Tags</h3>
@@ -98,9 +101,73 @@
     </div>
 </div>
 
-<!-- SLIDE 5: GET STARTED -->
-<div class="slide closing" data-slide="4">
-    <span class="slide-number">05 / 05</span>
+<!-- SLIDE 5: DESIGN DECISIONS (portfolio) -->
+<div class="slide" data-slide="4">
+    <span class="slide-number">05 / 07</span>
+    <h2 class="animate-in delay-1">Design Decisions</h2>
+
+    <table class="animate-in delay-2">
+        <thead><tr><th>Decision</th><th>Why</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Vanilla JS only</strong></td><td>No React, no build step &mdash; open the HTML and present. Runs anywhere, even offline.</td></tr>
+            <tr><td><strong>CSS custom properties</strong></td><td>One <code>:root</code> block to theme the entire deck. Swap <code>--accent</code> and you have a new brand.</td></tr>
+            <tr><td><strong>CSS Grid for layouts</strong></td><td>Metric cards, before/after columns, responsive breakpoints &mdash; all declarative, no JS layout.</td></tr>
+            <tr><td><strong>Separated CSS + JS</strong></td><td>HTML stays under 100 lines. Copy the HTML, keep the assets &mdash; instant new presentation.</td></tr>
+            <tr><td><strong><code>fullscreenchange</code> event</strong></td><td>Syncs UI state regardless of how fullscreen exits (button, ESC, <code>F</code> key, browser API).</td></tr>
+            <tr><td><strong>Themes via <code>data-theme</code></strong></td><td><code>&lt;html data-theme="light"&gt;</code> + CSS variables per palette; JS array controls cycle order and toolbar icon.</td></tr>
+            <tr><td><strong>Gradient text on h1</strong></td><td><code>background-clip: text</code> for visual impact without images or extra markup.</td></tr>
+        </tbody>
+    </table>
+
+    <div class="arch-flow animate-in delay-3" style="font-size: 0.85rem;">
+        <strong class="highlight">Architecture</strong><br><br>
+        <span class="green">tech-slides.css</span> (theme + components + slide engine)<br>
+        &nbsp;&nbsp;+ <span class="blue">tech-slides.js</span> (navigation + keyboard + fullscreen)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;+ <span class="highlight">your-slides.html</span> (pure content &mdash; no inline styles or scripts)
+    </div>
+</div>
+
+<!-- SLIDE 6: FULL-STACK PORTFOLIO -->
+<div class="slide" data-slide="5">
+    <span class="slide-number">06 / 07</span>
+    <h2 class="animate-in delay-1">Full-Stack Portfolio</h2>
+
+    <p class="animate-in delay-2" style="color: var(--muted);">This project is part of a broader portfolio spanning backend systems and frontend experiences.</p>
+
+    <div class="before-after animate-in delay-3">
+        <div class="ba-col" style="border-top: 3px solid var(--blue);">
+            <h3 style="color: var(--blue);">Backend &amp; Infrastructure</h3>
+            <ul>
+                <li>Python (FastAPI, Pydantic, SQLAlchemy)</li>
+                <li>AWS Lambda, API Gateway, CloudWatch</li>
+                <li>Structured logging &amp; observability</li>
+                <li>CI/CD (Jenkins, Nx, tox, uv)</li>
+                <li>Legacy dependency migration at scale</li>
+                <li>Monorepo architecture</li>
+            </ul>
+        </div>
+        <div class="ba-col" style="border-top: 3px solid var(--purple);">
+            <h3 style="color: var(--purple);">Frontend &amp; Creative</h3>
+            <ul>
+                <li>React + TypeScript (portfolio app)</li>
+                <li>SCSS, responsive design, i18n</li>
+                <li>Vanilla JS presentation framework</li>
+                <li>CSS Grid, custom properties, animations</li>
+                <li>Deployed on Vercel &amp; GitHub Pages</li>
+                <li>Zero-dependency, offline-capable tools</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="animate-in delay-4" style="margin-top: 1.5rem; text-align: center;">
+        <a href="https://cyntia-santos.vercel.app/" target="_blank" style="color: var(--accent); text-decoration: none; font-size: 1rem; margin-right: 2rem;">cyntia-santos.vercel.app</a>
+        <a href="https://github.com/csantos31" target="_blank" style="color: var(--muted); text-decoration: none; font-size: 1rem;">github.com/csantos31</a>
+    </div>
+</div>
+
+<!-- SLIDE 7: GET STARTED -->
+<div class="slide closing" data-slide="6">
+    <span class="slide-number">07 / 07</span>
     <h2 class="animate-in delay-1">Clone it. Edit it. Present it.</h2>
     <p class="animate-in delay-2" style="color: var(--muted); margin-top: 1rem;">
         <code>git clone &amp;&amp; open index.html</code>
@@ -110,61 +177,7 @@
     </p>
 </div>
 
-<script>
-    const slides = document.querySelectorAll('.slide');
-    const progress = document.getElementById('progress');
-    const btnPrev = document.getElementById('btnPrev');
-    const btnNext = document.getElementById('btnNext');
-    const total = slides.length;
-    let current = 0;
-
-    function update() {
-        slides.forEach((s, i) => {
-            s.classList.remove('active');
-            s.style.opacity = '0';
-            s.style.pointerEvents = 'none';
-            s.style.transform = i > current ? 'translateX(60px)' : 'translateX(-60px)';
-        });
-        const active = slides[current];
-        active.classList.add('active');
-        active.style.opacity = '1';
-        active.style.pointerEvents = 'all';
-        active.style.transform = 'translateX(0)';
-
-        progress.style.width = ((current + 1) / total * 100) + '%';
-        btnPrev.classList.toggle('hidden', current === 0);
-        btnNext.classList.toggle('hidden', current === total - 1);
-    }
-
-    function goTo(index) {
-        if (index < 0 || index >= total || index === current) return;
-        current = index;
-        update();
-    }
-
-    function toggleFs() {
-        if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen().catch(() => {});
-            document.getElementById('btnFs').textContent = '✕ Exit';
-        } else {
-            document.exitFullscreen();
-            document.getElementById('btnFs').textContent = '⛶ Fullscreen';
-        }
-    }
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
-            e.preventDefault();
-            goTo(current + 1);
-        }
-        if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-            e.preventDefault();
-            goTo(current - 1);
-        }
-    });
-
-    update();
-</script>
+<script src="tech-slides.js"></script>
 
 </body>
 </html>
